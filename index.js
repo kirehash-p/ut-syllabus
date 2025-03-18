@@ -155,8 +155,8 @@ function submitForm() {
 let globalResults = [];
 function displayResults(results) {
   const resultDiv = document.getElementById("result");
-  if (!results || results.length === 0) {
-    resultDiv.innerHTML = "<p>一致する講義は見つかりませんでした。</p>";
+  if (!results || results.length <= 1) {
+    resultDiv.innerHTML = '<p style="text-align:center;">一致する講義は見つかりませんでした。</p>';
     return;
   }
   globalResults = results;
