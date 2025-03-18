@@ -452,7 +452,7 @@ function openModal(elem, rowIndex) {
   closeBtn.style.position = "absolute";
   closeBtn.style.top = "10px";
   closeBtn.style.right = "20px";
-  closeBtn.style.fontSize = "1.5em";
+  closeBtn.style.fontSize = "3em";
   closeBtn.style.cursor = "pointer";
   closeBtn.style.zIndex = "10001";
   closeBtn.onclick = closeModal;

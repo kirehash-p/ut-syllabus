@@ -180,15 +180,9 @@ input[type="button"]:hover {
   margin-right: 8px;
 }
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-
-/* モバイル対応 */
 @media (max-width: 900px) {
   body {
     margin: 10px;
@@ -198,6 +192,29 @@ input[type="button"]:hover {
     max-width: 100%;
     margin: 0 auto;
     border-radius: 0;
+  }
+  /* 追加：検索結果操作タブ用スタイル */
+  #resultControlTabs {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+    z-index: 2;
+    display: flex;
+    gap: 10px;
+    /* 幅は隣接する検索条件タブと同じか隣接するサイズに調整 */
+    width: fit-content;
+  }
+  #resultControlTabs button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    cursor: pointer;
+  }
+  #resultControlTabs button.active {
+    background: #ddd;
+    font-weight: bold;
   }
   .lecture-card {
     width: 95%;
@@ -224,5 +241,11 @@ input[type="button"]:hover {
   .filter-row input {
     width: 100%;
     margin-bottom: 5px;
+  }
+  #modalCard {
+    width: 100vw !important;
+    max-height: 90vh !important;
+    top: 0 !important;
+    left: 0 !important;
   }
 }
