@@ -120,6 +120,10 @@
           }
           e.stopPropagation();
         });
+        filterForm.addEventListener("submit", function(e) {
+          e.preventDefault();
+          submitForm();
+        });
       };
 
       function submitForm() {
