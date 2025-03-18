@@ -20,12 +20,53 @@
       </form>
     </div>
     <div id="content">
-      <div id="result"></div>
+      <div id="result">
+        <div class="instruction">
+          <h2>講義検索ツールの使い方</h2>
+          <ol>
+            <li>
+              <strong>検索条件の設定：</strong>
+              <ul>
+                <li>デフォルトでSセメの講義一覧が表示されるよう検索条件が設定されています。</li>
+                <li>「＋ 条件を追加」ボタンを押すと、新たな検索条件を追加できます。</li>
+                <li>2個目以降の条件は削除ボタン（×）で削除できます。</li>
+                <li>条件が複数ある場合はAND条件で絞り込まれます。</li>
+              </ul>
+            </li>
+            <li>
+              <strong>キーワードの入力：</strong>
+              <ul>
+                <li>選択した項目に応じたサンプルが入力欄のプレースホルダーに表示されます。</li>
+                <li>それらを参考にしながら実際に検索したいキーワードを入力してください。</li>
+              </ul>
+            </li>
+            <li>
+              <strong>検索実行：</strong>
+              <ul>
+                <li>全ての条件を設定したら、「検索」ボタンをクリックします。</li>
+                <li>検索中は結果が取得されるまで「検索中…」という表示がされます。</li>
+              </ul>
+            </li>
+            <li>
+              <strong>検索結果の確認：</strong>
+              <ul>
+                <li>検索結果がカード形式で一覧表示されます。</li>
+                <li>各カードをクリックすると、講義の詳細情報が拡大されて表示されます。</li>
+                <li>検索画面上部の「検索条件 ▼」をクリックして検索画面を収納・展開できます。</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
     </div>
     <div id="modal" class="modal"></div>
     <script>
       const GAS_API_URL =
         "https://script.google.com/macros/s/AKfycbzZu84dV89NImVHmcJ2kCFHd1tgJ8SSzxxpqyeMEAu4-d_IIBMPNKVSkfpXiJaT76Nz/exec";
+
+      const DEFAULT_FILTERS = [
+        { column: "学期", type: "include", keyword: "S" },
+      ]
 
       const columns = [
         "時間割コード",
@@ -57,11 +98,12 @@
         "成績評価方法": "Ex. 試験 / レポート / 出席"
       };
 
-      function addFilterRow() {
+      function addFilterRow(defaults = {}) {
         const container = document.getElementById("filterContainer");
         const rowDiv = document.createElement("div");
         rowDiv.className = "filter-row";
 
+        // カラム選択
         const selectColumn = document.createElement("select");
         selectColumn.name = "column";
         columns.forEach(col => {
@@ -70,32 +112,36 @@
           option.text = col;
           selectColumn.appendChild(option);
         });
+        // defaults.column が指定されていればそれをセット
+        selectColumn.value = defaults.column || columns[0];
         rowDiv.appendChild(selectColumn);
 
+        // 条件選択
         const selectCondition = document.createElement("select");
         selectCondition.name = "condition";
-        let optInclude = document.createElement("option");
-        optInclude.value = "include";
-        optInclude.text = "含む";
-        let optExclude = document.createElement("option");
-        optExclude.value = "exclude";
-        optExclude.text = "含まれていない";
-        selectCondition.appendChild(optInclude);
-        selectCondition.appendChild(optExclude);
+        [["include", "含む"], ["exclude", "含まれていない"]].forEach(([val, text]) => {
+          let opt = document.createElement("option");
+          opt.value = val;
+          opt.text = text;
+          selectCondition.appendChild(opt);
+        });
+        selectCondition.value = defaults.condition || "include";
         rowDiv.appendChild(selectCondition);
 
+        // キーワード入力
         const inputKeyword = document.createElement("input");
         inputKeyword.type = "text";
         inputKeyword.name = "keyword";
-        inputKeyword.placeholder =
-          placeholderMapping[selectColumn.value] || "キーワード";
+        inputKeyword.placeholder = placeholderMapping[selectColumn.value] || "キーワード";
+        inputKeyword.value = defaults.keyword || "";
         rowDiv.appendChild(inputKeyword);
 
+        // カラム変更時にプレースホルダーを更新
         selectColumn.addEventListener("change", function () {
-          inputKeyword.placeholder =
-            placeholderMapping[this.value] || "キーワード";
+          inputKeyword.placeholder = placeholderMapping[this.value] || "キーワード";
         });
 
+        // 複数条件の場合は削除ボタンを追加
         if (document.getElementsByClassName("filter-row").length > 0) {
           let removeBtn = document.createElement("button");
           removeBtn.type = "button";
@@ -103,11 +149,16 @@
           removeBtn.onclick = () => rowDiv.remove();
           rowDiv.appendChild(removeBtn);
         }
+
         container.appendChild(rowDiv);
       }
 
       window.onload = function () {
-        addFilterRow();
+        if (DEFAULT_FILTERS.length > 0) {
+          DEFAULT_FILTERS.forEach(filter => addFilterRow(filter));
+        } else {
+          addFilterRow();
+        }
         const toggle = document.getElementById("searchBarToggle");
         const filterForm = document.getElementById("filterForm");
         toggle.addEventListener("click", function (e) {

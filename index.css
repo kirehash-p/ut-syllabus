@@ -9,6 +9,13 @@ h1 {
   margin-bottom: 30px;
   font-size: 2.5em;
 }
+.instruction {
+  display: block;
+  margin: 20px auto;
+  max-width: 800px;
+  font-size: 1.2em;
+  color: #555;
+}
 #searchBar {
   position: sticky;
   top: 0;
