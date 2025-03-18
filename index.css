@@ -1,183 +1,213 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background: #f7f7f7;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f7f7f7;
+}
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+#searchBar {
+  position: sticky;
+  top: 0;
+  margin: 0 auto;
+  max-width: 800px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  z-index: 1;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+}
+#searchBarToggle {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  user-select: none;
+}
+#filterForm {
+  padding: 20px;
+  text-align: center;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+#filterForm.collapsed {
+  display: none;
+}
+.add-condition-btn {
+  background-color: #2196F3;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.add-condition-btn:hover {
+  background-color: #1976D2;
+}
+input[type="button"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type="button"]:hover {
+  background-color: #45a049;
+}
+#content {
+  margin-top: 20px;
+}
+.filter-row {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}
+.filter-row select,
+.filter-row input {
+  margin-right: 5px;
+  padding: 4px;
+}
+.lecture-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 80%;
+}
+.lecture-card.expanded {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+.lecture-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.lecture-card.expanded:hover {
+  transform: none;
+  box-shadow: none;
+}
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+.card-top-left {
+  flex: 1;
+}
+.course-name {
+  font-size: 2em;
+  font-weight: bold;
+  line-height: 1.4em;
+  max-height: 4.2em;
+  overflow: hidden;
+}
+.card-top-right {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 10px;
+}
+.grid-row {
+  display: contents;
+}
+.group-box {
+  background-color: #f2f8ff;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.group-header {
+  font-weight: bold;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+.group-label {
+  font-weight: bold;
+}
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.pre-wrap {
+  white-space: pre-wrap;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+#loading {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #555;
+}
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    font-size: 2.5em;
+  100% {
+    transform: rotate(360deg);
   }
-  #searchBar {
-    position: sticky;
-    top: 0;
-    margin: 0 auto;
-    max-width: 800px;
-    background: #fff;
-    border-bottom: 1px solid #ccc;
-    z-index: 1;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 8px 8px;
-  }
-  #searchBarToggle {
-    cursor: pointer;
-    background-color: #f0f0f0;
-    padding: 10px;
-    font-weight: bold;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-    user-select: none;
-  }
-  #filterForm {
-    padding: 20px;
-    text-align: center;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-  }
-  #filterForm.collapsed {
-    display: none;
-  }
-  .add-condition-btn {
-    background-color: #2196F3;
-    color: #fff;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  .add-condition-btn:hover {
-    background-color: #1976D2;
-  }
-  input[type="button"] {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  input[type="button"]:hover {
-    background-color: #45a049;
-  }
-  #content {
-    margin-top: 20px;
-  }
-  .filter-row {
-    margin-bottom: 5px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    justify-content: center;
-  }
-  .filter-row select,
-  .filter-row input {
-    margin-right: 5px;
-    padding: 4px;
-  }
-  .lecture-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 20px auto;
-    padding: 10px;
-    background-color: #fafafa;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 80%;
-  }
-  .lecture-card.expanded {
-    margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .lecture-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  .lecture-card.expanded:hover {
-    transform: none;
-    box-shadow: none;
-  }
-  .card-top {
-    display: flex;
-    justify-content: space-between;
+}
+
+/* モバイル対応 */
+@media (max-width: 600px) {
+  body {
     margin: 10px;
   }
-  .card-top-left {
-    flex: 1;
+  #searchBar {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 0;
   }
-  .course-name {
-    font-size: 2em;
-    font-weight: bold;
-    line-height: 1.4em;
-    max-height: 4.2em;
-    overflow: hidden;
+  .lecture-card {
+    width: 95%;
+    margin: 10px auto;
+  }
+  .card-top {
+    flex-direction: column;
   }
   .card-top-right {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 10px;
-  }
-  .grid-row {
-    display: contents;
-  }
-  .group-box {
-    background-color: #f2f8ff;
-    border-radius: 8px;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  .group-header {
-    font-weight: bold;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 4px;
-  }
-  .group-label {
-    font-weight: bold;
-  }
-  .vertical {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
   }
-  .pre-wrap {
-    white-space: pre-wrap;
+  .grid-row {
+    display: block;
   }
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+  .group-row {
+    display: block;
   }
-  #loading {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 1.2em;
-    color: #555;
-  }
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-  }
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
+}
