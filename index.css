@@ -182,7 +182,7 @@ input[type="button"]:hover {
 }
 
 /* モバイル対応 */
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   body {
     margin: 10px;
   }
