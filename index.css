@@ -210,4 +210,12 @@ input[type="button"]:hover {
   .group-row {
     display: block;
   }
+  .filter-row {
+    flex-wrap: wrap;
+  }
+  .filter-row select,
+  .filter-row input {
+    width: 100%;
+    margin-bottom: 5px;
+  }
 }
